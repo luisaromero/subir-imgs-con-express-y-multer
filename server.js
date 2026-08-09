@@ -8,6 +8,13 @@ const PORT = 3000;
 
 // asegurar carpeta uploads
 const UPLOAD_DIR = path.join(__dirname, 'uploads');
+
+
+// estáticos
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static(UPLOAD_DIR));
+
+
 if (!fs.existsSync(UPLOAD_DIR)) fs.mkdirSync(UPLOAD_DIR, { recursive: true });
 
 // almacenamiento con nombre único
@@ -31,8 +38,6 @@ const upload = multer({
     fileFilter
 });
 
-// estáticos
-app.use(express.static(path.join(__dirname, 'public')));
 
 // endpoint de subida
 app.post('/upload', upload.single('foto'), (req, res) => {
